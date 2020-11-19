@@ -1,0 +1,30 @@
+
+* {
+    margin: 0;
+    
+}
+
+.darkSquares {
+    background-color: brown;
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+   
+}
+
+.lightSquares {
+    background-color: beige;
+    color: blue;
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+    
+}
+
+.test {
+    color: fuchsia;
+}
+
+#a1, #b1, #c1, #d1, #e1, #f1, #g1, #h1 {
+    color:black;
+}
