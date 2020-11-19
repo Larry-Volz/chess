@@ -4,6 +4,11 @@
     box-sizing: border-box;
     
 }
+#position {
+    /* text-align: right; */
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
 table {
     border-collapse: collapse;
     /* margin: 0; */
@@ -20,6 +25,7 @@ h1 {
     font-family: 'Roboto', sans-serif;
     font-size: 2em;
     color: blue;
+    display: inline-block;
 }
 
 .darkSquares {

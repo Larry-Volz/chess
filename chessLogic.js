@@ -1,16 +1,28 @@
+/*
+THINGS TO DO
+- do movement function where:
+    - click 1: piece vanishes from board/curser turns into utfCode of piece
+    - click 2: piece placed onto square chosen/curser turns back into arrow
+- Add allowed/disallowed moves - objects, use ...spread to go through various moves
+as an array to allow or disallow them
+- create an undo function
+- use localStorage to keep details "sticky"
+- use database/login so 2 people can play long-distance
+- do insult API
+- do actual chess game API
+*/
 
-
-const wr = { utfCode: '\u2656',
+const wr = { utfCode: '\u265C',
             color: 'white'}
-const wn = {utfCode: '\u2658',
+const wn = {utfCode: '\u265E',
             color: 'white' }
-const wb = {utfCode: '\u2657',
+const wb = {utfCode: '\u265D',
             color: 'white' }
-const wq = {utfCode: '\u2655',
+const wq = {utfCode: '\u265B',
             color: 'white' }
-const wk = {utfCode: '\u2654',
+const wk = {utfCode: '\u265A',
             color: 'white'}
-const wp = {utfCode: '\u2659',
+const wp = {utfCode: '\u265F',
             color: 'white'}
 
 const br = { utfCode: '\u265C',
@@ -53,9 +65,13 @@ function drawBoard () {
             // console.log(`id: ${idCode}, rank: ${rank}, file: ${fil}`);
 
             //   console.log(`rankAndFile: ${rankAndFile[fil][rank]}`);
-              currentPiece = rankAndFile[rank][fil].utfCode;
+              currentPiece = rankAndFile[rank][fil];
               board = document.querySelector(idCode);
-              board.innerHTML = (currentPiece) ? currentPiece : '&nbsp';
+              board.innerHTML = (currentPiece) ? currentPiece.utfCode : '&nbsp';
+            board.style.color = currentPiece.color;
+
+            console.log(`currentPiece.color: ${currentPiece.color}`)
+            
             
         }
 
@@ -68,5 +84,6 @@ drawBoard();
 table.addEventListener('click', function(event) {
 
     console.log(`target: ${event.target.id}`);
+    document.querySelector('#position').innerText = event.target.id;
 
 });
