@@ -12,6 +12,7 @@ table {
 td, tr {
     /* margin: 0; */
     border-collapse: collapse;
+    font-size: 2.5rem;
 }
 
 h1 {
