@@ -13,6 +13,7 @@ const rankAndFile = [
 const letters = "abcdefgh";
 let idCode;
 let currentPiece=0;
+const table = document.querySelector("table");
 
 // console.log(`rankAndFile: ${rankAndFile[0][0]}`);
 
@@ -21,9 +22,9 @@ function drawBoard () {
         for (let fil = 0; fil < 8; fil++) {
             idCode = "#"+letters[fil]+(rank+1);
             // console.log(idCode);
-            console.log(`id: ${idCode}, rank: ${rank}, file: ${fil}`);
+            // console.log(`id: ${idCode}, rank: ${rank}, file: ${fil}`);
 
-              console.log(`rankAndFile: ${rankAndFile[fil][rank]}`);
+            //   console.log(`rankAndFile: ${rankAndFile[fil][rank]}`);
               currentPiece = rankAndFile[rank][fil];
               board = document.querySelector(idCode);
               board.innerHTML = (currentPiece) ? currentPiece : '&nbsp';
@@ -33,4 +34,11 @@ function drawBoard () {
     }
 };
 
+
 drawBoard();
+
+table.addEventListener('click', function(event) {
+
+    console.log(`target: ${event.target.id}`);
+
+});
