@@ -521,20 +521,18 @@ let setTouchedPiece = (clickedYX) => {
     return clickedYX;
 }
 
-function setPiece(movedFrom, movingTo, movingPiece) {
+function setPiece(yxFrom, yxTo, movingPiece) {
 
-    if (freeOfFriends(movingTo[1], movingTo[0], movingPiece)) {
+    if (freeOfFriends(yxTo[1], yxTo[0], movingPiece) 
+        && isOnBoard(yxTo[1], yxTo[0])) {
 
-        let fromId = rankAndFile[movedFrom[1]][movedFrom[0]];
+        let fromId = rankAndFile[yxFrom[1]][yxFrom[0]];
 
-        rankAndFile[movingTo[1]][movingTo[0]] = {...fromId};
-        console.log(`moved to ${movingTo[1]}, ${movingTo[0]}`);
+        rankAndFile[yxTo[1]][yxTo[0]] = {...fromId};
+        console.log(`moved to ${yxTo[1]}, ${yxTo[0]}`);
 
-        
-
-        rankAndFile[movedFrom[1]][movedFrom[0]] = 0
+        rankAndFile[yxFrom[1]][yxFrom[0]] = 0
     }
-    
 }
 
 function freeOfFriends(y,x,pieceObj){
@@ -547,5 +545,7 @@ function freeOfFriends(y,x,pieceObj){
     }
     return true;
 }
+
+let isOnBoard = (y,x,) => (y<8 && x<8);
 
 
