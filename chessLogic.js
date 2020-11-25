@@ -390,9 +390,11 @@ let currentPiece=0;
 const table = document.querySelector("table");
 // let allVisable = true;
 
-let justClickedFR = [9,9];
+let clickedYX = [9,9];
+let lastClickedYX = [9,9];
 let pieceObj = 0;
-let touchedPiece = false;
+let lastPieceObj = 0;
+let pieceTouched = false;
 let touchedId ="";
 let position = "";
 
@@ -428,13 +430,18 @@ drawBoard();
 table.addEventListener('click', function(event) {
 
     position = event.target.id;
-    justClickedFR = convertIdToRF(position); //returns an array with 2 variables, file and rank
-    pieceObj = getPiece (justClickedFR); //gets the object of the piece at that position in array
+    clickedYX = convertIdToRF(position); //returns an array with 2 variables, file and rank
+    pieceObj = getPiece (clickedYX); //gets the object of the piece at that position in array
 
-    if (!touchedPiece && pieceObj) {
+    if (!pieceTouched && pieceObj) {
         //if it wasn't touched before indicated it has been now and set
-        //touchedId
-        touchedId = setTouchedPiece(justClickedFR);
+        //touchedId - a y,x string (?)
+        touchedId = setTouchedPiece(clickedYX);
+        console.log(`touchedId = ${touchedId}`);
+
+        //set last piece as this coordinate in case we can't move
+        lastPieceObj = pieceObj;
+        lastClickedYX = clickedYX;
         
         //highlight piece/change it's color
         let temp = pieceObj.color;
@@ -444,14 +451,15 @@ table.addEventListener('click', function(event) {
 
         pieceObj.color = temp;
          
-    } else if (touchedPiece) {
+    } else if (pieceTouched) {
         //means this is the 2nd click so change it back
-        touchedPiece=false;
+        pieceTouched=false;
         //if it has been touched will will move it - later add logic about
         //whether it is a legal move or not/if there is another piece there
         
         //change object's color back, update the array with new position
-        setPiece(touchedId, justClickedFR);
+        //unless illegal move and then returns without changing the board
+        setPiece(touchedId, clickedYX, pieceObj);
 
         
         //replaces object with a nbsp in array
@@ -507,24 +515,37 @@ table.addEventListener('click', function(event) {
 }
 
 //pass rank and file as a 2-element array
-let setTouchedPiece = (justClickedFR) => {
+let setTouchedPiece = (clickedYX) => {
     // rankAndFile[fAndR[1]][fAndR[0]] = 1;
-    touchedPiece = true;
-    return justClickedFR;
+    pieceTouched = true;
+    return clickedYX;
 }
 
-function setPiece(movedFrom, movingTo) {
+function setPiece(movedFrom, movingTo, movingPiece) {
 
-    let fromId = rankAndFile[movedFrom[1]][movedFrom[0]];
+    if (freeOfFriends(movingTo[1], movingTo[0], movingPiece)) {
 
-    rankAndFile[movingTo[1]][movingTo[0]] = {...fromId};
+        let fromId = rankAndFile[movedFrom[1]][movedFrom[0]];
 
+        rankAndFile[movingTo[1]][movingTo[0]] = {...fromId};
+        console.log(`moved to ${movingTo[1]}, ${movingTo[0]}`);
 
-    rankAndFile[movedFrom[1]][movedFrom[0]] = 0
+        
 
+        rankAndFile[movedFrom[1]][movedFrom[0]] = 0
+    }
     
 }
 
-
+function freeOfFriends(y,x,pieceObj){
+    let squareContents =rankAndFile[y][x];
+    let {id, name, color} = squareContents;
+    if (lastPieceObj.color === color) {
+        console.log(`you are ${pieceObj.color} and they are ${color}`)
+        console.log(`YOU CANNOT MOVE THERE! ${y}, ${x} contains a ${color} ${name}`);
+        return false;
+    }
+    return true;
+}
 
 
